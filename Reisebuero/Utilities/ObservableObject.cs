@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Reisebuero.Utilities
 {
@@ -6,11 +7,9 @@ namespace Reisebuero.Utilities
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (this.PropertyChanged == null) return;
-            var e = new PropertyChangedEventArgs(propertyName);
-            this.PropertyChanged(this, e);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
