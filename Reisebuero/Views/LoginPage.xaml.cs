@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Reisebuero.ViewModels;
 
 namespace Reisebuero.Views
 {
@@ -23,6 +24,14 @@ namespace Reisebuero.Views
         public LoginPage()
         {
             InitializeComponent();
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                ((LoginPageViewModel)DataContext).LoginPassword = ((PasswordBox)sender).Password;
+            }
         }
     }
 }

@@ -6,17 +6,17 @@ namespace Reisebuero.Models
     public class LoginForm : BaseModel
     {
         [NotMapped]
-        public int ID
+        public override int ID
         {
-            get { return Employee.ID; }
-            set { Employee.ID = value; }
+            get { return EmployeeID; }
+            set { EmployeeID = SetProperty(value, EmployeeID); }
         }
         [Key]
         [ForeignKey("Employee")]
-        public int EmployeeID
+        protected int EmployeeID
         {
-            get { return ID; }
-            set { ID = value; }
+            get { return Employee.ID; }
+            set { Employee.ID = value; }
         }
         public Employee Employee { get; set; }
         public string Password { get; set; }

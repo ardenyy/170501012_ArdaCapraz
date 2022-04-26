@@ -16,6 +16,7 @@ namespace Reisebuero.Utilities
 
         protected bool SetProperty<T>([NotNullIfNotNull("newValue")] ref T field, T newValue, [CallerMemberName] string? propertyName = null)
         {
+            System.Diagnostics.Trace.WriteLine("asdasdas");
             if (EqualityComparer<T>.Default.Equals(field, newValue))
             {
                 return false;
@@ -23,6 +24,19 @@ namespace Reisebuero.Utilities
             field = newValue;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        protected T SetProperty<T>(T newValue, T? oldValue = default(T), [CallerMemberName] string? propertyName = null)
+        {
+            if (oldValue != null)
+            {
+                if (EqualityComparer<T>.Default.Equals(oldValue, newValue))
+                {
+                    return oldValue;
+                }
+            }
+            OnPropertyChanged(propertyName);
+            return newValue;
         }
     }
 }

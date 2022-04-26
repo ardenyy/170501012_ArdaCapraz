@@ -4,7 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Reisebuero.Views"
+        xmlns:viewModel="clr-namespace:Reisebuero.ViewModels"
         mc:Ignorable="d"
         Title="Reisebuero"  MinHeight="700" MinWidth="1000" Height="700" Width="1000" Background="DarkGray">
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
     <local:LoginPage/>
 </Window>
