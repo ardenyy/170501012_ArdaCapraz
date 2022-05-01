@@ -4,8 +4,8 @@
     {
         public enum Role
         {
+            Employee = 0,
             Administrator = 1,
-            Employee = 2
         }
     }
 }
