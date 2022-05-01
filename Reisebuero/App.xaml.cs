@@ -21,9 +21,9 @@ namespace Reisebuero
         /// <returns></returns>
         private async void CreateAdminIfNotExist()
         {
-            GenericDataService<Employee> employeeService = new GenericDataService<Employee>(new ReisebueroDbContextFactory());
-            GenericDataService<LoginForm> loginService = new GenericDataService<LoginForm>(new ReisebueroDbContextFactory());
-            Employee? returnedEmployee = await employeeService.Get(0);
+            AsyncGenericDataService<Employee> employeeService = new AsyncGenericDataService<Employee>(new ReisebueroDbContextFactory());
+            AsyncGenericDataService<LoginForm> loginService = new AsyncGenericDataService<LoginForm>(new ReisebueroDbContextFactory());
+            Employee? returnedEmployee = await employeeService.GetAsync(0);
             if (returnedEmployee == null)
             {
                 Employee employee = new Employee();
@@ -34,8 +34,8 @@ namespace Reisebuero
                 LoginForm loginForm = new LoginForm();
                 loginForm.ID = employee.ID;
                 loginForm.Password = "admin";
-                _ = await employeeService.Create(employee);
-                _ = await loginService.Create(loginForm);
+                _ = await employeeService.CreateAsync(employee);
+                _ = await loginService.CreateAsync(loginForm);
             }
         }
     }

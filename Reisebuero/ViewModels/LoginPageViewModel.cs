@@ -38,14 +38,14 @@ namespace Reisebuero.ViewModels
 
         private async void Login()
         {
-            GenericDataService<Employee> employeeService = new GenericDataService<Employee>(new ReisebueroDbContextFactory());
-            GenericDataService<LoginForm> loginService = new GenericDataService<LoginForm>(new ReisebueroDbContextFactory());
+            var employeeService = new AsyncGenericDataService<Employee>(new ReisebueroDbContextFactory());
+            var loginService = new AsyncGenericDataService<LoginForm>(new ReisebueroDbContextFactory());
 
             LoginForm loginForm = new LoginForm(); ;
             loginForm.ID = UInt16.Parse(_loginID);
             loginForm.Password = _loginPassword;
 
-            LoginForm? loginFormResult = await loginService.Get(loginForm.ID);
+            LoginForm? loginFormResult = await loginService.GetAsync(loginForm.ID);
             if (loginFormResult == null)
             {
                 System.Diagnostics.Trace.WriteLine("Account with given ID couldnt found");
@@ -56,7 +56,7 @@ namespace Reisebuero.ViewModels
                 System.Diagnostics.Trace.WriteLine("Account with given Password couldnt found");
                 return;
             }
-            Employee returnedEmployee = await employeeService.Get(loginForm.ID);
+            Employee returnedEmployee = (await employeeService.GetAsync(loginForm.ID))!;
             System.Diagnostics.Trace.WriteLine("Account found");
             System.Diagnostics.Trace.WriteLine("ID: " + returnedEmployee.ID + "\nName: " + returnedEmployee.Name);
         }
