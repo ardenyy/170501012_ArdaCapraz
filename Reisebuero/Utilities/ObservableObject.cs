@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 
 namespace Reisebuero.Utilities
 {
@@ -16,7 +16,6 @@ namespace Reisebuero.Utilities
 
         protected bool SetProperty<T>([NotNullIfNotNull("newValue")] ref T field, T newValue, [CallerMemberName] string? propertyName = null)
         {
-            System.Diagnostics.Trace.WriteLine("asdasdas");
             if (EqualityComparer<T>.Default.Equals(field, newValue))
             {
                 return false;
