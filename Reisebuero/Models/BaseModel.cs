@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Reisebuero.Models
 {
-    public abstract class BaseModel : ObservableObject
+    public class BaseModel : ObservableObject
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]

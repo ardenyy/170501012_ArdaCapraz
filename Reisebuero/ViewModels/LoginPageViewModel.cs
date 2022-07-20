@@ -13,11 +13,14 @@ namespace Reisebuero.ViewModels
         private string _loginID = "";
         private string _loginPassword = "";
 
+        private bool _lockLogin = false;
+
         public string LoginID
         {
             get { return _loginID; }
             set {  SetProperty(ref _loginID, value); }
         }
+
         public string LoginPassword
         {
             get { return _loginPassword; }
@@ -25,6 +28,7 @@ namespace Reisebuero.ViewModels
         }
 
         public RelayCommand LoginCommand { get; set; }
+        public RelayCommand SuccessfulLoginCommand { get; set; }
 
         public LoginPageViewModel()
         {
@@ -33,11 +37,13 @@ namespace Reisebuero.ViewModels
                 param => !String.IsNullOrWhiteSpace(LoginID)
                          && UInt16.TryParse(LoginID, out ushort r)
                          && !String.IsNullOrEmpty(LoginPassword)
+                         && !_lockLogin
             );
         }
 
         private async void Login()
         {
+            _lockLogin = true;
             var employeeService = new AsyncGenericDataService<Employee>(new ReisebueroDbContextFactory());
             var loginService = new AsyncGenericDataService<LoginForm>(new ReisebueroDbContextFactory());
 
@@ -59,6 +65,9 @@ namespace Reisebuero.ViewModels
             Employee returnedEmployee = (await employeeService.GetAsync(loginForm.ID))!;
             System.Diagnostics.Trace.WriteLine("Account found");
             System.Diagnostics.Trace.WriteLine("ID: " + returnedEmployee.ID + "\nName: " + returnedEmployee.Name);
+
+            SuccessfulLoginCommand?.Execute(returnedEmployee);
+            _lockLogin = false;
         }
     }
 }

@@ -6,9 +6,19 @@
         xmlns:local="clr-namespace:Reisebuero.Views"
         xmlns:viewModel="clr-namespace:Reisebuero.ViewModels"
         mc:Ignorable="d"
-        Title="Reisebuero"  MinHeight="700" MinWidth="1000" Height="700" Width="1000" Background="DarkGray">
+        Title="Reisebuero"  MinHeight="400" MinWidth="1000" Height="700" Width="1200">
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>
     </Window.DataContext>
-    <local:LoginPage/>
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:LoginPageViewModel}">
+            <local:LoginPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:MainPageViewModel}">
+            <local:MainPage/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+    </Grid>
 </Window>

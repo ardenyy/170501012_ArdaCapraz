@@ -8,6 +8,18 @@ namespace Reisebuero.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public Constants.Role Role { get; set; }
-        public List<TourSale> SoldTours { get; set; }
+        public List<TourSale> TourSales { get; set; } = new List<TourSale>();
+
+        public bool CheckObjectData()
+        {
+            if (Name == null
+                || Surname == null
+                || (Role != Constants.Role.Administrator
+                    && Role != Constants.Role.Employee))
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

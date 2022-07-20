@@ -1,0 +1,164 @@
+﻿<UserControl x:Class="Reisebuero.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1200"
+      Background="DarkGray">
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <Grid Margin="10" DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" Margin="0,15,0,10"/>
+                <TextBlock Grid.Row="1" Text="{Binding Role}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                <StackPanel x:Name="SelectedTour" Visibility="{Binding VisibilitySelectedTour}"
+                            Margin="0,5,20,0"
+                            Grid.Column="1"
+                            Grid.RowSpan="3">
+                    <DataGrid MinHeight="50" CanUserAddRows="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="{Binding IsReadOnly}" ItemsSource="{Binding SelectedTour}"/>
+                    <Button Content="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding SelectedTour/}" />
+                    <Grid Visibility="{Binding VisibilityEditCancel}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Confirm" Command="{Binding ConfirmCommand}" CommandParameter="{Binding SelectedTour/}" />
+                        <Button Content="Cancel" Grid.Column="1" Command="{Binding ConfirmCommand}" CommandParameter="Cancel"/>
+                    </Grid>
+                    <Button Content="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedTour/}"/>
+                </StackPanel>
+                
+                <StackPanel x:Name="SelectedCustomer" Visibility="{Binding VisibilitySelectedCustomer}"
+                            Margin="0,5,20,0"
+                            Grid.Column="1"
+                            Grid.RowSpan="3">
+                    <DataGrid MinHeight="50" CanUserAddRows="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="{Binding IsReadOnly}" ItemsSource="{Binding SelectedCustomer}"/>
+                    <Button Content="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding SelectedCustomer/}" />
+                    <Grid Visibility="{Binding VisibilityEditCancel}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Confirm" Command="{Binding ConfirmCommand}" CommandParameter="{Binding SelectedCustomer/}" />
+                        <Button Content="Cancel" Grid.Column="1" Command="{Binding ConfirmCommand}" CommandParameter="Cancel"/>
+                    </Grid>
+                    <Button Content="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedEmployee/}"/>
+                </StackPanel>
+                
+                <StackPanel x:Name="SelectedEmployee" Visibility="{Binding VisibilitySelectedEmployee}"
+                            Margin="0,5,20,0"
+                            Grid.Column="1"
+                            Grid.RowSpan="3">
+                    <DataGrid MinHeight="50" CanUserAddRows="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="{Binding IsReadOnly}" ItemsSource="{Binding SelectedEmployee}"/>
+                    <Button Content="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding SelectedEmployee/}" />
+                    <Grid Visibility="{Binding VisibilityEditCancel}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Confirm" Command="{Binding ConfirmCommand}" CommandParameter="{Binding SelectedEmployee/}" />
+                        <Button Content="Cancel" Grid.Column="1" Command="{Binding ConfirmCommand}" CommandParameter="Cancel"/>
+                    </Grid>
+                    <Button Content="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedEmployee/}"/>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Margin="5" Background="White" DockPanel.Dock="Bottom" Text="{Binding InfoText}"></TextBlock>
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <TabControl Margin="20,0,20,20" DockPanel.Dock="Left">
+                    <TabItem Header="Toures">
+                        <StackPanel >
+                            <DataGrid IsReadOnly="True"
+                                  ItemsSource="{Binding Tours}"
+                                  IsSynchronizedWithCurrentItem="True">
+                                <DataGrid.InputBindings>
+                                    <MouseBinding
+                                    MouseAction="LeftDoubleClick"
+                                    Command="{Binding DoubleClickCommand}"
+                                    CommandParameter="{Binding Tours/}"/>
+                                </DataGrid.InputBindings>
+                            </DataGrid>
+                            <Button Content="Create New Tour" Margin="15" Command="{Binding CreateCommand}" CommandParameter="Tour"/>
+                        </StackPanel>
+                    </TabItem>
+                    
+                    <TabItem Header="Customers">
+                        <StackPanel >
+                            <DataGrid IsReadOnly="True"
+                                  ItemsSource="{Binding Customers}"
+                                  IsSynchronizedWithCurrentItem="True">
+                                <DataGrid.InputBindings>
+                                    <MouseBinding
+                                    MouseAction="LeftDoubleClick"
+                                    Command="{Binding DoubleClickCommand}"
+                                    CommandParameter="{Binding Customers/}"/>
+                                </DataGrid.InputBindings>
+                            </DataGrid>
+                            <Button Content="Create New Customer" Margin="15" Command="{Binding CreateCommand}" CommandParameter="Customer"/>
+                        </StackPanel>
+                    </TabItem>
+                    
+                    <TabItem Header="Employees">
+                        <StackPanel >
+                            <DataGrid IsReadOnly="True"
+                                  ItemsSource="{Binding Employees}"
+                                  IsSynchronizedWithCurrentItem="True">
+                                <DataGrid.InputBindings>
+                                    <MouseBinding
+                                    MouseAction="LeftDoubleClick"
+                                    Command="{Binding DoubleClickCommand}"
+                                    CommandParameter="{Binding Employees/}"/>
+                                </DataGrid.InputBindings>
+                            </DataGrid>
+                            <Button Content="Create New Employee" Margin="15" Command="{Binding CreateCommand}" CommandParameter="Employee"/>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+
+                <Grid Grid.Column="1" Margin="0,20,10,20" MinWidth="200">
+                    <StackPanel Visibility="{Binding VisibilitySelectedCustomer}">
+                        <DataGrid IsReadOnly="True" ItemsSource="{Binding CustomersTours}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox Text="{Binding IndexAddRemove}" Margin="50,10,50,10"/>
+                        <Button Content="Add" Command="{Binding AddCommand}" CommandParameter="Customer"/>
+                        <Button Content="Remove" Command="{Binding RemoveCommand}" CommandParameter="Customer"/>
+                    </StackPanel>
+
+                    <StackPanel Visibility="{Binding VisibilitySelectedTour}">
+                        <DataGrid IsReadOnly="True" ItemsSource="{Binding ToursCustomers}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox Text="{Binding IndexAddRemove}" Margin="50,10,50,10"/>
+                        <Button Content="Add" Command="{Binding AddCommand}" CommandParameter="Tour"/>
+                        <Button Content="Remove" Command="{Binding RemoveCommand}" CommandParameter="Tour"/>
+                    </StackPanel>
+
+                    <DataGrid Visibility="{Binding VisibilitySelectedEmployee}" IsReadOnly="True" ItemsSource="{Binding EmployeesTourSales}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>  
+            </Grid>
+        </DockPanel>
+    </Grid>
+</UserControl>

@@ -17,6 +17,7 @@ namespace Reisebuero.Services
         public async Task<T> CreateAsync(T entity)
         {
             using var context = _contextFactory.CreateDbContext();
+            context.Attach(entity);
             var createdEntity = await context.Set<T>().AddAsync(entity).ConfigureAwait(false);
             await context.SaveChangesAsync().ConfigureAwait(false);
             return createdEntity.Entity;
@@ -26,6 +27,7 @@ namespace Reisebuero.Services
         {
             using var context = _contextFactory.CreateDbContext();
             T entity = await context.Set<T>().SingleAsync(e => e.ID.Equals(id)).ConfigureAwait(false);
+            context.Attach(entity);
             context.Set<T>().Remove(entity);
             await context.SaveChangesAsync().ConfigureAwait(false);
         }
@@ -33,8 +35,7 @@ namespace Reisebuero.Services
         public async Task<T?> GetAsync(int id)
         {
             using var context = _contextFactory.CreateDbContext();
-            T? entity = await context.Set<T>().SingleOrDefaultAsync(e => e.ID.Equals(id)).ConfigureAwait(false);
-            await Task.Delay(2000).ConfigureAwait(false);
+            T? entity = await context.Set<T>().FindAsync(id).ConfigureAwait(false);
             return entity;
         }
 
@@ -45,10 +46,12 @@ namespace Reisebuero.Services
             return entities;
         }
 
-        public async Task<T> UpdateAsync(int id, T entity)
+        public async Task<T> UpdateAsync(int id, T newEntity)
         {
             using var context = _contextFactory.CreateDbContext();
-            entity.ID = id;
+            T entity = await context.Set<T>().FindAsync(id);
+            if (entity == null) throw new System.Data.RowNotInTableException();
+            entity = newEntity;
             context.Set<T>().Update(entity);
             await context.SaveChangesAsync().ConfigureAwait(false);
             return entity;

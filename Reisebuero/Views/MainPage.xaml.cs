@@ -12,26 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Reisebuero.ViewModels;
 
 namespace Reisebuero.Views
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class LoginPage : UserControl
+    public partial class MainPage : UserControl
     {
-        public LoginPage()
+        public MainPage()
         {
             InitializeComponent();
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (DataContext != null)
-            {
-                ((LoginPageViewModel)DataContext).LoginPassword = ((PasswordBox)sender).Password;
-            }
         }
     }
 }
